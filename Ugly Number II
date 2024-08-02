@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        //1 D dp 
+        // why dp? because we always need to know the minimum ugly value to calculate the nth ugly value
+        int p2=1;
+        int p3=1;
+        int p5=1;
+        //=1 because we are considering 1 based indexing
+
+        vector<int>dp(n+1);
+        dp[1] = 1;
+
+        for(int i=2; i<=n; i++){
+            int v2= dp[p2] * 2;
+            int v3= dp[p3] * 3;
+            int v5= dp[p5] * 5;
+
+            int ugly_val= min(v2,min(v3,v5));
+
+            dp[i] = ugly_val;
+            if(ugly_val == v2) p2++;
+            if(ugly_val == v3) p3++;
+            if(ugly_val == v5) p5++;
+        }
+        return dp[n];
+    }
+};
