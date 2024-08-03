@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int nthSuperUglyNumber(int n, vector<int>& primes) {
+        if(n == 1)  return 1;
+        int m = primes.size();
+        vector<int>index(m,0);
+        // vector<int>values(m,1);
+
+        vector<int>dp(n);
+        dp[0] = 1;
+        for(int i=1 ; i<n ; i++){
+           
+            long next_ugly = INT_MAX;
+            
+            for (int j = 0; j < m; j++) {
+                next_ugly = min(next_ugly, (long)dp[index[j]] * primes[j]);
+            }
+            
+            dp[i] = (long)next_ugly;
+            
+            for (int j = 0; j < m; j++) {
+                if ((long)dp[index[j]] * primes[j] == next_ugly) {
+                    index[j]++;
+                }
+            }
+        }
+        return dp[n-1];
+    }
+};
