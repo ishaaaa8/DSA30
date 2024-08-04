@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int rangeSum(vector<int>& nums, int n, int left, int right) {
+            // int m= n*(n+1)/2;
+        vector<int>s;
+        int sum=0;
+        int MOD=1e9+7;
+        for(int i=0;i<n;i++){
+            sum=0;
+            for(int j=i;j<n;j++){
+                sum+=nums[j];
+                s.push_back(sum);
+            }
+        }
+        sum=0;
+        sort(s.begin(),s.end());
+        for(int i=left;i<=right && i<=s.size() ;i++){
+            sum = (sum + s[i-1]) % MOD;
+        }
+        return sum%MOD;
+
+    }
+};
